@@ -1,11 +1,11 @@
 /* eslint-disable no-trailing-spaces */
 const impact = (data) => {
   let getFactor;
-  if (data.periodType === 'days') {
+  if (data.periodType.trim().toLowerCase() === 'days') {
     getFactor = Math.trunc((58 * 1) / 3);
-  } else if (data.periodType === 'weeks') {
+  } else if (data.periodType.trim().toLowerCase() === 'weeks') {
     getFactor = Math.trunc((58 * 7) / 3);
-  } else if (data.periodType === 'months') {
+  } else if (data.periodType.trim().toLowerCase() === 'months') {
     getFactor = Math.trunc((58 * 30) / 3);
   } else {
     getFactor = 0;
