@@ -12,13 +12,17 @@ const factor = (data) => {
   }
   return getFactor;
 };
+const normalCases = (data) => (data.reportedCases * 10) * (2 ** factor(data));
 const severeCases = (data) => (data.reportedCases * 50) * (2 ** factor(data));
 
 const covid19ImpactEstimator = (data) => ({
   data,
   impact: {
     currentlyInfected: data.reportedCases * 10,
-    infectionsByRequestedTime: (data.reportedCases * 10) * (2 ** factor(data))
+    infectionsByRequestedTime: (normalCases(data)),
+    severeCasesByRequestedTime: 0.15 * (normalCases(data)),
+    hospitalBedsByRequestedTime: (0.35 * data.totalHospitalBeds) - (0.15 * (normalCases(data)))
+
   },
   severeImpact: {
     currentlyInfected: data.reportedCases * 50,
