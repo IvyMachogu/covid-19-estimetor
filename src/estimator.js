@@ -12,6 +12,7 @@ const factor = (data) => {
   }
   return getFactor;
 };
+const severeCases = (data) => (data.reportedCases * 50) * (2 ** factor(data));
 
 const covid19ImpactEstimator = (data) => ({
   data,
@@ -21,7 +22,7 @@ const covid19ImpactEstimator = (data) => ({
   },
   severeImpact: {
     currentlyInfected: data.reportedCases * 50,
-    infectionsByRequestedTime: (data.reportedCases * 50) * (2 ** factor(data))
+    infectionsByRequestedTime: severeCases(data)
   }
 });
 
