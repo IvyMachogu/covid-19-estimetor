@@ -2,13 +2,13 @@
 const impact = (data) => {
   let getFactor;
   if (data.periodType.trim().toLowerCase() === 'days') {
-    getFactor = Math.trunc((58 * 1) / 3);
+    getFactor = Math.trunc((data.timeToElapse * 1) / 3);
   } else if (data.periodType.trim().toLowerCase() === 'weeks') {
-    getFactor = Math.trunc((58 * 7) / 3);
+    getFactor = Math.trunc((data.timeToElapse * 7) / 3);
   } else if (data.periodType.trim().toLowerCase() === 'months') {
-    getFactor = Math.trunc((58 * 30) / 3);
+    getFactor = Math.trunc((data.timeToElapse * 30) / 3);
   } else {
-    getFactor = 0;
+    getFactor = 1;
   }
   return getFactor;
 };
