@@ -8,7 +8,7 @@ const factor = (data) => {
   } else if (data.periodType.trim().toLowerCase() === 'months') {
     getFactor = Math.trunc((data.timeToElapse * 30) / 3);
   } else {
-    getFactor = 1;
+    getFactor = 0;
   }
   return getFactor;
 };
