@@ -1,14 +1,18 @@
 /* eslint-disable no-trailing-spaces */
 const factor = (data) => {
   let getFactor;
-  if (data.periodType === 'days') {
-    getFactor = Math.trunc((data.timeToElapse * 1) / 3);
-  } else if (data.periodType === 'weeks') {
-    getFactor = Math.trunc((data.timeToElapse * 7) / 3);
-  } else if (data.periodType === 'months') {
-    getFactor = Math.trunc((data.timeToElapse * 30) / 3);
-  } else {
-    getFactor = 0;
+  switch (data.periodType) {
+    case 'days':
+      getFactor = Math.trunc((data.timeToElapse * 1) / 3);
+      break;
+    case 'weeks':
+      getFactor = Math.trunc((data.timeToElapse * 7) / 3);
+      break;
+    case 'months':
+      getFactor = Math.trunc((data.timeToElapse * 30) / 3);
+      break;
+    default:
+      getFactor = 0;
   }
   return getFactor;
 };
