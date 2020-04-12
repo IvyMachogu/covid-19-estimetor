@@ -14,21 +14,21 @@ const factor = (data) => {
 };
 const normalCases = (data) => (data.reportedCases * 10) * (2 ** factor(data));
 const severeCases = (data) => (data.reportedCases * 50) * (2 ** factor(data));
-
+const beds = (data) => (0.35 * data.totalHospitalBeds);
 const covid19ImpactEstimator = (data) => ({
   data,
   impact: {
     currentlyInfected: data.reportedCases * 10,
     infectionsByRequestedTime: (normalCases(data)),
     severeCasesByRequestedTime: 0.15 * (normalCases(data)),
-    hospitalBedsByRequestedTime: (0.35 * data.totalHospitalBeds) - (0.15 * (normalCases(data)))
+    hospitalBedsByRequestedTime: Math.trunc((beds(data)) - (0.15 * (normalCases(data))))
 
   },
   severeImpact: {
     currentlyInfected: data.reportedCases * 50,
     infectionsByRequestedTime: severeCases(data),
     severeCasesByRequestedTime: 0.15 * (severeCases(data)),
-    hospitalBedsByRequestedTime: (0.35 * data.totalHospitalBeds) - (0.15 * (severeCases(data)))
+    hospitalBedsByRequestedTime: Math.trunc((beds(data)) - (0.15 * (severeCases(data))))
   }
 });
 
