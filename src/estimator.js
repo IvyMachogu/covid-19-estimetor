@@ -1,19 +1,19 @@
 /* eslint-disable no-trailing-spaces */
-const factor = (data) => {
+const getDays = (data) => {
   let getFactor;
   if (data.periodType.trim().toLowerCase() === 'days') {
-    getFactor = Math.trunc((data.timeToElapse * 1) / 3);
+    getFactor = data.timeToElapse * 1;
   } else if (data.periodType.trim().toLowerCase() === 'weeks') {
-    getFactor = Math.trunc((data.timeToElapse * 7) / 3);
+    getFactor = (data.timeToElapse * 7);
   } else if (data.periodType.trim().toLowerCase() === 'months') {
-    getFactor = Math.trunc((data.timeToElapse * 30) / 3);
+    getFactor = (data.timeToElapse * 30);
   } else {
     getFactor = 0;
   }
   return getFactor;
 };
-const normalCases = (data) => (data.reportedCases * 10) * (2 ** factor(data));
-const severeCases = (data) => (data.reportedCases * 50) * (2 ** factor(data));
+const normalCases = (data) => (data.reportedCases * 10) * (2 ** (Math.trunc(getDays(data)) / 3));
+const severeCases = (data) => (data.reportedCases * 50) * (2 ** (Math.trunc(getDays(data)) / 3));
 const beds = (data) => (0.35 * data.totalHospitalBeds);
 const income = (data) => data.region.avgDailyIncomeInUSD;
 const population = (data) => data.region.avgDailyIncomePopulation;
@@ -27,7 +27,7 @@ const covid19ImpactEstimator = (data) => ({
     hospitalBedsByRequestedTime: Math.trunc((beds(data)) - (0.15 * (normalCases(data)))),
     casesForICUByRequestedTime: Math.trunc(0.05 * (normalCases(data))),
     casesForVentilationByRequestedTime: Math.trunc(0.02 * (normalCases(data))),
-    dollarsInflight: (normalCases(data)) * income * population * (2 ** factor(data))
+    dollarsInflight: (normalCases(data)) * income * population * (2 ** getDays(data))
   },
   severeImpact: {
     currentlyInfected: data.reportedCases * 50,
@@ -36,7 +36,7 @@ const covid19ImpactEstimator = (data) => ({
     hospitalBedsByRequestedTime: Math.trunc((beds(data)) - (0.15 * (severeCases(data)))),
     casesForICUByRequestedTime: Math.trunc(0.05 * severeCases(data)),
     casesForVentilationByRequestedTime: Math.trunc(0.02 * severeCases(data)),
-    dollarsInflight: severeCases(data) * income * population * (2 ** factor(data))
+    dollarsInflight: severeCases(data) * income * population * (getDays(data))
   }
 });
 
