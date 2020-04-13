@@ -28,8 +28,8 @@ const covid19ImpactEstimator = (data) => ({
     infectionsByRequestedTime: (normalCases(data)),
     severeCasesByRequestedTime: 0.15 * (normalCases(data)),
     hospitalBedsByRequestedTime: Math.trunc((beds(data)) - (0.15 * (normalCases(data)))),
-    casesForICUByRequestedTime: Math.trunc(0.05 * (normalCases(data))),
-    casesForVentilatorsByRequestedTime: Math.trunc(0.02 * Math.trunc(normalCases(data))),
+    casesForICUByRequestedTime: Math.trunc(0.05 * Math.trunc(normalCases(data))),
+    casesForVentilatorsByRequestedTime: Math.floor(0.02 * (normalCases(data))),
     dollarsInFlight: Math.trunc((normalCases(data) * avgPopDailyIncome(data)) / getDays(data))
   },
   severeImpact: {
@@ -37,8 +37,8 @@ const covid19ImpactEstimator = (data) => ({
     infectionsByRequestedTime: severeCases(data),
     severeCasesByRequestedTime: 0.15 * (severeCases(data)),
     hospitalBedsByRequestedTime: Math.trunc((beds(data)) - (0.15 * (severeCases(data)))),
-    casesForICUByRequestedTime: Math.trunc(0.05 * severeCases(data)),
-    casesForVentilatorsByRequestedTime: Math.trunc(0.02 * Math.trunc(severeCases(data))),
+    casesForICUByRequestedTime: Math.trunc(0.05 * Math.trunc(severeCases(data))),
+    casesForVentilatorsByRequestedTime: Math.floor(0.02 * (severeCases(data))),
     dollarsInFlight: Math.trunc((severeCases(data) * avgPopDailyIncome(data)) / getDays(data))
   }
 });
