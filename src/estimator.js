@@ -24,12 +24,12 @@ const Factor = (data) => {
   } else if (data.periodType.trim().toLowerCase() === 'months') {
     getFactor = Math.trunc((data.timeToElapse * 30) / 3);
   } else {
-    getFactor = 1;
+    getFactor = 0;
   }
   return getFactor;
 };
-const normalCases = (data) => (data.reportedCases * 10) * (2 ** (Math.trunc(Factor(data))));
-const severeCases = (data) => (data.reportedCases * 50) * (2 ** (Math.trunc(Factor(data))));
+const normalCases = (data) => (data.reportedCases * 10) * (2 ** Factor(data));
+const severeCases = (data) => (data.reportedCases * 50) * (2 ** Factor(data));
 const beds = (data) => (0.35 * data.totalHospitalBeds);
 const income = (data) => data.region.avgDailyIncomeInUSD;
 const population = (data) => data.region.avgDailyIncomePopulation;
