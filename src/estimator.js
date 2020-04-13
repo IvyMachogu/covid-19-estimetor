@@ -1,5 +1,20 @@
 /* eslint-disable no-trailing-spaces */
-
+const getDays = (data) => {
+  let getFactor;
+  if (data.periodType.trim()
+    .toLowerCase() === 'days') {
+    getFactor = data.timeToElapse * 1;
+  } else if (data.periodType.trim()
+    .toLowerCase() === 'weeks') {
+    getFactor = (data.timeToElapse * 7);
+  } else if (data.periodType.trim()
+    .toLowerCase() === 'months') {
+    getFactor = (data.timeToElapse * 30);
+  } else {
+    getFactor = 0;
+  }
+  return getFactor;
+};
 const Factor = (data) => {
   let getFactor;
   if (data.periodType.trim().toLowerCase() === 'days') {
@@ -28,7 +43,7 @@ const covid19ImpactEstimator = (data) => ({
     hospitalBedsByRequestedTime: Math.trunc((beds(data)) - (0.15 * (normalCases(data)))),
     casesForICUByRequestedTime: Math.trunc(0.05 * (normalCases(data))),
     casesForVentilatorsByRequestedTime: Math.trunc(0.02 * (normalCases(data))),
-    dollarsInflight: ((normalCases(data)) * avgPopDailyIncome(data)) * income(data)
+    dollarsInflight: ((normalCases(data)) * avgPopDailyIncome(data)) * income(data) * getDays(data)
   },
   severeImpact: {
     currentlyInfected: data.reportedCases * 50,
@@ -37,7 +52,7 @@ const covid19ImpactEstimator = (data) => ({
     hospitalBedsByRequestedTime: Math.trunc((beds(data)) - (0.15 * (severeCases(data)))),
     casesForICUByRequestedTime: Math.trunc(0.05 * severeCases(data)),
     casesForVentilatorsByRequestedTime: Math.trunc(0.02 * severeCases(data)),
-    dollarsInflight: (severeCases(data) * avgPopDailyIncome(data)) * income(data)//* getDays(data)
+    dollarsInflight: (severeCases(data) * avgPopDailyIncome(data)) * income(data) //* getDays(data)
   }
 });
 
