@@ -1,19 +1,35 @@
 /* eslint-disable no-trailing-spaces */
 const getDays = (data) => {
   let getFactor;
-  if (data.periodType.trim().toLowerCase() === 'days') {
+  if (data.periodType.trim()
+    .toLowerCase() === 'days') {
     getFactor = data.timeToElapse * 1;
-  } else if (data.periodType.trim().toLowerCase() === 'weeks') {
+  } else if (data.periodType.trim()
+    .toLowerCase() === 'weeks') {
     getFactor = (data.timeToElapse * 7);
-  } else if (data.periodType.trim().toLowerCase() === 'months') {
+  } else if (data.periodType.trim()
+    .toLowerCase() === 'months') {
     getFactor = (data.timeToElapse * 30);
   } else {
     getFactor = 0;
   }
   return getFactor;
 };
-const normalCases = (data) => (data.reportedCases * 10) * (2 ** (Math.trunc(getDays(data)) / 3));
-const severeCases = (data) => (data.reportedCases * 50) * (2 ** (Math.trunc(getDays(data)) / 3));
+const Factor = (data) => {
+  let getFactor;
+  if (data.periodType.trim().toLowerCase() === 'days') {
+    getFactor = Math.trunc((data.timeToElapse * 1) / 3);
+  } else if (data.periodType.trim().toLowerCase() === 'weeks') {
+    getFactor = Math.trunc((data.timeToElapse * 7) / 3);
+  } else if (data.periodType.trim().toLowerCase() === 'months') {
+    getFactor = Math.trunc((data.timeToElapse * 30) / 3);
+  } else {
+    getFactor = 1;
+  }
+  return getFactor;
+};
+const normalCases = (data) => (data.reportedCases * 10) * (2 ** (Math.trunc(Factor(data))));
+const severeCases = (data) => (data.reportedCases * 50) * (2 ** (Math.trunc(Factor(data))));
 const beds = (data) => (0.35 * data.totalHospitalBeds);
 const income = (data) => data.region.avgDailyIncomeInUSD;
 const population = (data) => data.region.avgDailyIncomePopulation;
