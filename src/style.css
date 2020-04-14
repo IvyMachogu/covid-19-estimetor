@@ -1,0 +1,16 @@
+.h{
+    text-decoration-color: black;
+}
+
+.wrapper{
+    background-color:pink;
+    text-decoration-color:black;
+    margin:50px auto;
+    padding: 40px 20px;
+    border-style:solid;
+    border-color: lightpink;
+    border-width: 10px 10px;
+    width: 500px;
+    height: 500px;
+
+}
